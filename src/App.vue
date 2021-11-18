@@ -1,30 +1,116 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="app"> 
+    <form @submit.prevent>
+      <h4>Создание поста</h4> 
+      <input 
+        :value="name" 
+        @input="name=$event.target.value" 
+        class="input" 
+        type="text" 
+        placeholder="название"
+      >
+      <input 
+      :value="body" 
+      @input="body=$event.target.value" 
+      class="input" 
+      type="text" 
+      placeholder="описание">
+      <button class="btn" @click="createPost">Создать</button>
+    </form>
+
+    <div class="post" v-for="post in posts" :key="post.id">
+      <img class="avatarSvg" :src="post.avatar">
+      <div><strong>название: </strong>{{post.name}}</div>
+      <div><strong>описание: </strong>{{post.body}}</div>
+      <div><strong>дата: </strong>{{post.date}}</div>
+    </div>
   </div>
-  <router-view/>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+  export default {
+    data() {
+      return {
+        posts: 
+          [
+            {
+              id: 1,
+              avatar: `https://avatars.dicebear.com/api/avataaars/1.svg`,
+              name: 'Vue',
+              body: 'описание',
+              date: new Date(Date.now()).toLocaleString()
+            },
+            { 
+              id: 2,
+              avatar: `https://avatars.dicebear.com/api/avataaars/15}.svg`, 
+              name: 'Front-end', 
+              body: 'описание 2',
+              date: new Date(Date.now()).toLocaleString()
+            },
+            { 
+              id: 3, 
+              avatar: `https://avatars.dicebear.com/api/avataaars/${Date.now()}.svg`,
+              name: 'JavaScript', 
+              body: 'описание 3',
+              date: new Date(Date.now()).toLocaleString() 
+            },
+          ],
+          name: '',
+          body: ''
+      }
+    },
+    methods: {
+      createPost() {
+        const newPost = {
+          id: Date.now(),
+          avatar: `https://avatars.dicebear.com/api/avataaars/${Date.now()}.svg`,
+          name: this.name,
+          body: this.body
 
-#nav {
-  padding: 30px;
-}
+        }
+        this.posts.push(newPost);
+        this.name = '';
+        this.body = '';
+      },
+    },
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
 }
+</script>
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style >
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .app {
+    padding: 20px;
+  }
+  .post {
+    padding: 15px;
+    border: 1px solid teal;
+    margin-top: 15px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  .avatarSvg {
+    width: 30px; 
+    height: 30px
+  }
+  .input {
+    width: 100%;
+    border: 1px solid teal;
+    padding: 10px 15px;
+    margin-top: 15px;
+  }
+  .btn {
+    margin-top: 15px;
+    align-self: flex-end;
+    padding: 10px 15px;
+    background: none;
+    color: teal;
+    border: 1px solid teal;
+  }
 </style>

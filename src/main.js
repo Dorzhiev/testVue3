@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from 'vue'; // 1. createApp импортируем из vue
+import App from './App'; //3. импортируем App компонент в main.js
 
-createApp(App).use(store).use(router).mount('#app')
+
+createApp(App) // 2. с помощью {createApp} создаем экземпляр приложение App
+.mount('#app'); // 4. монтируем область видимости в #app
